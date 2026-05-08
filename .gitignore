@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtualenv created by ./install.sh
+.venv/
+venv/
+env/
+
+# Runtime output
+reports/
+*.log
+
+# Local config / secrets (settings live in ~/.config/vulnscout)
+settings.json
+*.local
+
+# Local Claude Code config
+.claude/
+
+# OS / editor cruft
+.DS_Store
+.idea/
+.vscode/
+*.swp
