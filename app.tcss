@@ -1,0 +1,475 @@
+/* vulnscout — three-phase pipeline, dark layout
+ *
+ * Color palette:
+ *   bg-deep:    #0b0d10   ← canvas
+ *   bg-panel:   #11141a   ← left panel + findings
+ *   bg-feed:    #0e1116   ← top-right live feed
+ *   border:     #1f2530
+ *   accent:     #66d9ef   (cyan)
+ *   accent-ok:  #a6e22e   (green)
+ *   accent-warn:#e6db74   (amber)
+ *   accent-bad: #f92672   (red)
+ *   muted:      #6e7a8a
+ */
+
+Screen {
+    background: #0b0d10;
+    color: #d8d8d8;
+}
+
+Header {
+    background: #11141a;
+    color: #66d9ef;
+}
+
+Footer {
+    background: #11141a;
+}
+
+#root {
+    height: 1fr;
+    layout: horizontal;
+}
+
+/* ---------------- Left panel ---------------- */
+
+#left {
+    width: 36;
+    background: #11141a;
+    padding: 1 2;
+    border-right: solid #1f2530;
+}
+
+#left > Label {
+    margin-top: 1;
+    color: #6e7a8a;
+    text-style: bold;
+}
+
+#scout-fox {
+    height: 2;
+    color: #e6a64c;
+    margin-bottom: 0;
+}
+
+#brand {
+    color: #66d9ef;
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+#left Input {
+    background: #0b0d10;
+    border: tall #1f2530;
+}
+
+#left Input:focus {
+    border: tall #66d9ef;
+}
+
+#left Select {
+    background: #0b0d10;
+}
+
+#profile-desc {
+    color: #6e7a8a;
+    height: auto;
+    margin-bottom: 1;
+}
+
+#actions {
+    layout: horizontal;
+    height: auto;
+    margin-top: 1;
+}
+
+#actions Button {
+    width: 1fr;
+    margin-right: 1;
+}
+
+#nmap-progress {
+    margin-top: 1;
+    width: 100%;
+    height: 1;
+}
+
+#nmap-progress > Bar {
+    width: 1fr;
+}
+
+#progress-text {
+    height: auto;
+    color: #6e7a8a;
+}
+
+#status {
+    margin-top: 1;
+    color: #a6e22e;
+    height: auto;
+}
+
+#sudo-banner {
+    margin-top: 1;
+    height: auto;
+    color: #e6db74;
+}
+
+#tools {
+    margin-top: 1;
+    height: auto;
+    color: #d8d8d8;
+}
+
+#identity {
+    margin-top: 1;
+    height: auto;
+    color: #d8d8d8;
+    border: tall #1f2530;
+    padding: 0 1;
+}
+
+RadioSet {
+    background: #0b0d10;
+    border: tall #1f2530;
+    padding: 0;
+}
+
+RadioSet:focus {
+    border: tall #66d9ef;
+}
+
+/* ---------------- Right panel ---------------- */
+
+#right {
+    width: 1fr;
+    layout: vertical;
+}
+
+/* Right pane: Findings (top, always visible), feed (middle), Loot+Tasks
+ * collapsibles (bottom). Findings gets the most real estate because
+ * that's the headline output of every scan. */
+
+#findings-panel {
+    height: 2fr;
+    background: #0e1116;
+    padding: 0 1;
+    border-bottom: solid #1f2530;
+}
+
+#findings-title {
+    height: 1;
+    color: #66d9ef;
+    text-style: bold;
+    background: #0e1116;
+    padding: 0 0 0 1;
+}
+
+FindingsList {
+    height: auto;
+    color: #d8d8d8;
+}
+
+#feed {
+    height: 1fr;
+    background: #0b0d10;
+    border-bottom: solid #1f2530;
+    padding: 0 1;
+    color: #d8d8d8;
+}
+
+#bottom-panels {
+    height: 1fr;
+    background: #0e1116;
+    padding: 0 1;
+}
+
+Collapsible {
+    background: #0e1116;
+    border: none;
+}
+
+Collapsible > Contents {
+    padding: 0 1 1 2;
+}
+
+LootList, TasksList {
+    height: auto;
+    color: #d8d8d8;
+}
+
+/* ---------------- Modals ---------------- */
+
+SettingsScreen, HelpScreen, ConfirmQuitScreen,
+ModulesScreen, InstallProgressScreen, FullAnalysisScreen,
+EngagementScreen, ConfirmActionScreen, DoubleConfirmActionScreen,
+PhraseConfirmScreen, EditCommandScreen, ExplainActionScreen,
+InstallAllScreen, SudoPasswordScreen {
+    align: center middle;
+}
+
+#settings-box, #help-box, #q-box, #modules-box, #install-box,
+#full-analysis-box, #engagement-box, #confirm-box, #edit-box,
+#explain-box, #sudo-box {
+    background: #11141a;
+    border: thick #66d9ef;
+    padding: 1 2;
+}
+
+/* Phase 4 — engagement screen */
+
+#engagement-box {
+    width: 95%;
+    height: 95%;
+}
+
+#engagement-panes {
+    layout: horizontal;
+    height: 1fr;
+    margin-top: 1;
+}
+
+#engagement-queue-pane {
+    width: 1fr;
+    height: 1fr;
+    border-right: solid #1f2530;
+    padding: 0 1;
+    overflow-y: auto;
+    scrollbar-size-vertical: 1;
+}
+
+/* Force the inner cards container to its content height so the parent
+ * VerticalScroll sees overflow and renders a scrollbar. Without this
+ * the Container defaults to filling its parent (1fr in a vertical
+ * context), which makes content height == viewport height and scrolling
+ * appears disabled even when there are more cards than fit. */
+#queue-cards {
+    height: auto;
+}
+
+#engagement-output-pane {
+    width: 1fr;
+    padding: 0 1;
+}
+
+#engagement-log {
+    height: 1fr;
+    background: #0b0d10;
+    border: tall #1f2530;
+}
+
+.tier-header {
+    height: auto;
+    margin-top: 1;
+    margin-bottom: 0;
+    padding: 0 1;
+    text-style: bold;
+}
+
+#engagement-help {
+    height: 1;
+    color: #6e7a8a;
+    text-align: center;
+}
+
+/* Confirm + edit + explain modals */
+
+#confirm-box {
+    width: 80;
+    height: auto;
+    max-height: 80%;
+}
+
+#confirm-box Static {
+    height: auto;
+}
+
+#edit-box {
+    width: 90;
+    height: auto;
+}
+
+#edit-box Input {
+    background: #0b0d10;
+    border: tall #1f2530;
+    margin-top: 1;
+}
+
+#explain-box {
+    width: 90;
+    height: 36;
+}
+
+#confirm-box .row, #edit-box .row {
+    layout: horizontal;
+    height: auto;
+    margin-top: 1;
+}
+
+#confirm-box .row Button, #edit-box .row Button {
+    width: 1fr;
+    margin-right: 1;
+}
+
+#full-analysis-box {
+    width: 90%;
+    height: 90%;
+}
+
+#full-analysis-text {
+    height: auto;
+    margin: 1 0;
+    color: #d8d8d8;
+}
+
+#settings-box {
+    width: 80;
+    height: 44;
+}
+
+#settings-tabs {
+    layout: horizontal;
+    height: auto;
+    margin-bottom: 1;
+}
+
+#settings-tabs Button {
+    width: 1fr;
+    margin-right: 1;
+}
+
+#settings-pane-general, #settings-pane-opsec {
+    height: auto;
+}
+
+.hidden {
+    display: none;
+}
+
+.opsec-row {
+    layout: horizontal;
+    height: auto;
+}
+
+.opsec-inline-label {
+    width: 12;
+    color: #6e7a8a;
+    padding-top: 1;
+}
+
+.opsec-numeric {
+    width: 10;
+    background: #0b0d10;
+    border: tall #1f2530;
+}
+
+#settings-pane-opsec Checkbox {
+    background: transparent;
+    margin-top: 1;
+}
+
+#tor-hint, #pc-hint {
+    height: auto;
+    margin-bottom: 1;
+}
+
+#settings-box Label {
+    margin-top: 1;
+    color: #6e7a8a;
+}
+
+#settings-box Input {
+    background: #0b0d10;
+    border: tall #1f2530;
+}
+
+#settings-box .row, #q-box .row, #install-box .row {
+    layout: horizontal;
+    height: auto;
+    margin-top: 1;
+}
+
+#settings-box .row Button, #q-box .row Button {
+    width: 1fr;
+    margin-right: 1;
+}
+
+#install-box .row Button {
+    width: 1fr;
+}
+
+#help-box {
+    width: 84;
+    height: 36;
+}
+
+#q-box {
+    width: 50;
+    height: auto;
+}
+
+#modules-box {
+    width: 96;
+    height: 38;
+}
+
+ModuleRow {
+    margin-bottom: 1;
+}
+
+ModuleRow Button {
+    margin-left: 1;
+}
+
+#install-box {
+    width: 90;
+    height: 30;
+}
+
+#install-log {
+    height: 1fr;
+    background: #0b0d10;
+    border: tall #1f2530;
+    margin-top: 1;
+}
+
+/* Modules screen — Install All actions + sudo prompt */
+
+#modules-actions {
+    layout: horizontal;
+    height: auto;
+    margin-bottom: 1;
+}
+
+#modules-actions Button {
+    width: auto;
+    margin-right: 2;
+}
+
+#install-all-status {
+    height: auto;
+    color: #6e7a8a;
+    margin-top: 1;
+}
+
+#sudo-box {
+    width: 64;
+    height: auto;
+}
+
+#sudo-box Input {
+    background: #0b0d10;
+    border: tall #1f2530;
+    margin-top: 1;
+}
+
+#sudo-box .row {
+    layout: horizontal;
+    height: auto;
+    margin-top: 1;
+}
+
+#sudo-box .row Button {
+    width: 1fr;
+    margin-right: 1;
+}
