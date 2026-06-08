@@ -17,6 +17,9 @@ We give a short grace window before declaring done in case a late
 emission queues another task.
 """
 
+# The scheduler is the FactStore's primary subscriber; every other consumer
+# (the TUI, synthesis tasks) sits downstream of the facts it reacts to.
+
 from __future__ import annotations
 
 import asyncio
