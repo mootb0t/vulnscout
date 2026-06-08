@@ -11,6 +11,9 @@ Owns:
   - looks_like_xml — sentinel for the LLM XML guard
 """
 
+# Severity is derived deterministically here (derive_severity) from raw tool
+# output — the LLM only ever summarizes a finding, it never grades it.
+
 import ipaddress
 import json
 import re
