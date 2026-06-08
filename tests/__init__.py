@@ -8,4 +8,7 @@ Run from the directory that CONTAINS the vulnscout package:
 These tests cover the pure, deterministic core (task registry contract,
 fact store, severity derivation, parsers, privesc analyzers). They do not
 import app.py, so textual is not required to run them.
+
+Add or extend a test whenever you add a task, fact type, or privesc rule —
+test_tasks.py is the contract guard that catches the silent breakages.
 """
