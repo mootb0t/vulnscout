@@ -12,6 +12,8 @@ from ..core.facts import Port, Target
 from ..core.store import FactStore
 
 
+# Convention: every plugin task calls have() first and returns early when its
+# binary is missing, so an absent tool is skipped instead of failing silently.
 def have(binary: str) -> bool:
     """Cheap PATH lookup. Tasks should bail early if the binary is gone
     rather than spawning and getting FileNotFoundError, because the
